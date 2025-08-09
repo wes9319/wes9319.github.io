@@ -1,0 +1,40 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: $color-bg;
+  color: $color-text;
+  font-family: $font-family-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: $color-accent; text-decoration: none; }
+
+.container { @include container; }
+
+img { max-width: 100%; display: block; }
+
+// Import original CSS for fidelity (served from public)
+@import url('/assets/bootstrap/css/bootstrap.min.css');
+@import url('/assets/bootstrap/css/bootstrap-grid.min.css');
+@import url('/assets/bootstrap/css/bootstrap-reboot.min.css');
+@import url('/assets/animatecss/animate.min.css');
+@import url('/assets/web/assets/mobirise-icons/mobirise-icons.css');
+@import url('/assets/socicon/css/styles.css');
+@import url('/assets/dropdown/css/style.css');
+@import url('/assets/theme/css/style.css');
+@import url('/assets/mobirise/css/mbr-additional.css');
