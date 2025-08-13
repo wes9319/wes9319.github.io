@@ -16,11 +16,7 @@ export function Footer() {
           </div>
           <div className="col-12 col-md-3 mbr-fonts-style display-7">
             <h5 className="pb-3">Contacto</h5>
-            <p className="mbr-text">
-              Email: wes9319_rhcp@hotmail.com
-              <br />
-              Tlf.: 0995988138
-            </p>
+            <p className="mbr-text"></p>
           </div>
           <div className="col-12 col-md-3 mbr-fonts-style display-7">
             <h5 className="pb-3">Links</h5>
