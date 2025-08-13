@@ -14,7 +14,6 @@ Modern migration of the original Mobirise-based static site into a React applica
 ## Project Layout
 ```
 .
-├─ lib/                         # Archived legacy site (original static files)
 ├─ public/
 │  └─ assets/                   # Static assets (images, css, fonts, vendor)
 ├─ src/
@@ -114,9 +113,6 @@ Example:
 ## Styles
 - Global styles at `src/app/styles/global.scss` import original vendor CSS from `public/assets` to keep current look and feel.
 - Sass variables and mixins in `src/app/styles/_variables.scss` and `_mixins.scss`.
-
-## Legacy Site
-- The previous static site has been archived under `lib/` to keep original assets/pages intact.
 
 ## Scripts (package.json)
 - `dev`: start Vite dev server
