@@ -9,8 +9,11 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <div>
+      <a href="#main-content" className="skip-link">Saltar al contenido principal</a>
       <Navbar />
-      {children}
+      <main id="main-content" role="main">
+        {children}
+      </main>
       <Footer />
     </div>
   );
