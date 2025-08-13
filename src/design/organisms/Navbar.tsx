@@ -2,13 +2,20 @@ import { Link, NavLink } from 'react-router-dom';
 
 export function Navbar() {
   return (
-    <section className="menu cid-qTkzRZLJNu" id="menu1-0">
-      <nav className="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+    <header className="menu cid-qTkzRZLJNu" id="menu1-0" role="banner">
+      <nav
+        className="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm"
+        aria-label="Navegación principal"
+      >
         <div className="menu-logo">
           <div className="navbar-brand">
             <span className="navbar-logo">
               <Link to="/">
-                <img src="/assets/images/logo-ewvv-web-red-200-200x100.png" alt="logo" style={{ height: '3.8rem' }} />
+                <img
+                  src="/assets/images/logo-ewvv-web-red-200-200x100.png"
+                  alt="EWVV - Inicio"
+                  style={{ height: '3.8rem' }}
+                />
               </Link>
             </span>
           </div>
@@ -16,7 +23,11 @@ export function Navbar() {
         <div className="collapse navbar-collapse show" id="navbarSupportedContent">
           <ul className="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
             <li className="nav-item">
-              <a className="nav-link link text-white display-4" href="/#header3-6">
+              <a
+                className="nav-link link text-white display-4"
+                href="/#header3-6"
+                aria-label="Ir a Sobre mi"
+              >
                 <span className="mbri-user mbr-iconfont mbr-iconfont-btn"></span>
                 Sobre mi
               </a>
@@ -48,6 +59,6 @@ export function Navbar() {
           </ul>
         </div>
       </nav>
-    </section>
+    </header>
   );
 }
