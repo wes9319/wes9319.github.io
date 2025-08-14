@@ -4,6 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import './Carousel.scss';
 
 type CarouselSlide = {
   id: string;
@@ -23,11 +24,12 @@ interface CarouselProps {
 
 export function Carousel({
   slides,
-  options = { loop: true },
+  options = { loop: true, duration: 20 },
   autoplay = true,
   autoplayDelay = 7000,
 }: CarouselProps) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -37,9 +39,9 @@ export function Carousel({
     return () => mql.removeEventListener?.('change', update);
   }, []);
 
-  const effectiveAutoplay = autoplay && !prefersReducedMotion;
+  const effectiveAutoplay = autoplay && !prefersReducedMotion && !isHovered;
   const plugins = useMemo(
-    () => (effectiveAutoplay ? [Autoplay({ delay: autoplayDelay })] : []),
+    () => (effectiveAutoplay ? [Autoplay({ delay: autoplayDelay, stopOnInteraction: false })] : []),
     [effectiveAutoplay, autoplayDelay]
   );
 
@@ -54,6 +56,13 @@ export function Carousel({
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
+  const scrollTo = useCallback(
+    (index: number) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi]
+  );
+
   useEffect(() => {
     if (!emblaApi) return;
     const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
@@ -63,14 +72,15 @@ export function Carousel({
 
   return (
     <section
-      className="carousel slide cid-r0uESEeqTF"
-      id="slider1-5"
+      className="modern-carousel"
       aria-label="Presentación de contenido destacado"
       role="region"
       aria-roledescription="carousel"
       aria-live={effectiveAutoplay ? 'off' : 'polite'}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="full-screen">
+      <div className="carousel-container">
         <div
           className="embla"
           ref={emblaRef}
@@ -81,38 +91,47 @@ export function Carousel({
           }}
           aria-label="Carrusel, use las flechas izquierda y derecha para navegar"
         >
-          <div className="embla__container carousel-inner" role="listbox" aria-live="polite">
+          <div className="embla__container" role="listbox" aria-live="polite">
             {slides.map((slide, index) => (
               <div
                 key={slide.id}
-                className={classNames('embla__slide carousel-item slider-fullscreen-image', {
-                  active: index === 0,
+                className={classNames('embla__slide', {
+                  active: index === selectedIndex,
                 })}
-                style={{ backgroundImage: `url(${slide.image})` }}
                 aria-label={`Slide ${index + 1} de ${slides.length}${index === selectedIndex ? ', actual' : ''}`}
               >
-                <div className="container container-slide">
-                  <div className="image_wrapper">
-                    <div
-                      className="mbr-overlay"
-                      style={{ opacity: 0.5, backgroundColor: 'rgb(0, 0, 0)' }}
-                    ></div>
-                    <img src={slide.image} title={slide.title} alt={slide.title} />
-                    <div className="carousel-caption justify-content-center">
-                      <div className="col-10 align-center">
-                        <h2 className="mbr-fonts-style display-1">{slide.title}</h2>
-                        <p className="lead mbr-text mbr-fonts-style display-5">
-                          {slide.description}
-                        </p>
-                        <div className="mbr-section-btn">
-                          <Link
-                            className="btn btn-white-outline display-4"
-                            to={slide.linkTo}
-                            aria-label={slide.linkText}
+                <div className="slide-background">
+                  <img src={slide.image} alt={slide.title} className="background-image" />
+                  <div className="overlay"></div>
+                </div>
+
+                <div className="slide-content">
+                  <div className="content-wrapper">
+                    <div className="text-content">
+                      <h2 className="slide-title">{slide.title}</h2>
+                      <p className="slide-description">{slide.description}</p>
+                      <div className="slide-actions">
+                        <Link
+                          className="slide-button"
+                          to={slide.linkTo}
+                          aria-label={slide.linkText}
+                        >
+                          <span>{slide.linkText}</span>
+                          <svg
+                            className="button-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            {slide.linkText}
-                          </Link>
-                        </div>
+                            <path
+                              d="M7 17L17 7M17 7H7M17 7V17"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -122,24 +141,65 @@ export function Carousel({
           </div>
         </div>
 
-        <button
-          className="carousel-control carousel-control-prev"
-          type="button"
-          onClick={scrollPrev}
-          aria-label="Slide anterior"
-        >
-          <span aria-hidden="true" className="mbri-left mbr-iconfont"></span>
-          <span className="sr-only">Anterior</span>
-        </button>
-        <button
-          className="carousel-control carousel-control-next"
-          type="button"
-          onClick={scrollNext}
-          aria-label="Slide siguiente"
-        >
-          <span aria-hidden="true" className="mbri-right mbr-iconfont"></span>
-          <span className="sr-only">Siguiente</span>
-        </button>
+        {/* Navigation Controls */}
+        <div className="carousel-controls">
+          <button
+            className="control-button prev-button"
+            type="button"
+            onClick={scrollPrev}
+            aria-label="Slide anterior"
+          >
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          <button
+            className="control-button next-button"
+            type="button"
+            onClick={scrollNext}
+            aria-label="Slide siguiente"
+          >
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Progress Indicators */}
+        <div className="carousel-indicators">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={classNames('indicator', {
+                active: index === selectedIndex,
+              })}
+              onClick={() => scrollTo(index)}
+              aria-label={`Ir al slide ${index + 1}`}
+            >
+              <div className="indicator-progress"></div>
+            </button>
+          ))}
+        </div>
+
+        {/* Slide Counter */}
+        <div className="slide-counter">
+          <span className="current-slide">{selectedIndex + 1}</span>
+          <span className="separator">/</span>
+          <span className="total-slides">{slides.length}</span>
+        </div>
       </div>
     </section>
   );
