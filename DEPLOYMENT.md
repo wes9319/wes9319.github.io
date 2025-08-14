@@ -2,10 +2,10 @@
 
 ## Overview
 
-Your React portfolio is now configured for deployment on GitHub Pages. The setup includes:
+Your React portfolio is now configured for deployment on GitHub Pages at the root domain `https://wes9319.github.io`. The setup includes:
 
 - ✅ GitHub Actions workflow for automatic deployment
-- ✅ Proper base path configuration for the repository name
+- ✅ Proper base path configuration for root domain
 - ✅ HashRouter for client-side routing compatibility
 - ✅ 404.html and routing scripts for SPA support
 - ✅ Manual deployment scripts
@@ -36,7 +36,7 @@ git push origin main
 ### 4. Access Your Site
 
 Once deployment is complete, your site will be available at:
-**https://wes9319.github.io/wes9319.github.io**
+**https://wes9319.github.io**
 
 ## Manual Deployment (Alternative)
 
@@ -55,7 +55,7 @@ npm run deploy
 ### Common Issues
 
 1. **404 Errors on Routes**: Make sure you're using HashRouter (already configured)
-2. **Assets Not Loading**: Check that the base path in `vite.config.ts` matches your repository name
+2. **Assets Not Loading**: Check that the base path in `vite.config.ts` is set to `/`
 3. **Build Failures**: Check the Actions tab for error details
 
 ### Checking Deployment Status
@@ -68,8 +68,8 @@ npm run deploy
 
 ### Key Changes Made
 
-1. **`vite.config.ts`**: Added `base: '/wes9319.github.io/'`
-2. **`package.json`**: Added deployment scripts and homepage
+1. **`vite.config.ts`**: Set base path to `/` for root domain
+2. **`package.json`**: Added deployment scripts and homepage URL
 3. **`src/app/providers/AppProviders.tsx`**: Changed to HashRouter
 4. **`.github/workflows/deploy.yml`**: GitHub Actions workflow
 5. **`public/404.html`**: SPA routing support
@@ -77,10 +77,8 @@ npm run deploy
 
 ### Customization
 
-- **Repository Name**: If you change the repository name, update:
-  - `vite.config.ts` base path
-  - `package.json` homepage
-  - `README.md` links
+- **Repository Name**: Since you're using the root domain, no changes needed for repository name
+- **Custom Domain**: If you add a custom domain later, update the base path accordingly
 
 ## Next Steps
 

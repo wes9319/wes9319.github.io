@@ -21,6 +21,7 @@ If you prefer to deploy manually:
    ```
 
 2. Deploy to GitHub Pages:
+
    ```bash
    npm run deploy
    ```
@@ -48,6 +49,7 @@ If you prefer to deploy manually:
    ```
 
 3. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -83,7 +85,7 @@ src/
 
 ## 🌐 Live Site
 
-Visit the live site at: [https://wes9319.github.io/wes9319.github.io](https://wes9319.github.io/wes9319.github.io)
+Visit the live site at: [https://wes9319.github.io](https://wes9319.github.io)
 
 ## 📝 License
 
