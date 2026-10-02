@@ -1,0 +1,177 @@
+---
+import type { Translations } from '../i18n/types';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container hero-grid">
+    <div>
+      <h1 id="hero-heading">{t.hero.name}</h1>
+      <p class="subtitle">{t.hero.title}</p>
+      <p class="location">{t.hero.location}</p>
+      <p class="pitch">{t.hero.pitch}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#work">{t.hero.ctaWork}</a>
+        <a class="btn btn-secondary" href="/cv.pdf" download>{t.hero.ctaCv}</a>
+        <a class="btn btn-secondary" href="#contact">{t.hero.ctaContact}</a>
+      </div>
+    </div>
+    <img
+      class="profile-photo"
+      src="/images/profile.jpg"
+      alt={t.hero.name}
+      width="1270"
+      height="952"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+</section>
+
+<section class="section" id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="about-heading">{t.about.heading}</h2>
+    </div>
+    <div class="prose">
+      {t.about.body.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="experience" aria-labelledby="experience-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="experience-heading">{t.experience.heading}</h2>
+    </div>
+    <div class="timeline">
+      {
+        t.experience.roles.map((role) => (
+          <article class="role-card">
+            <header>
+              <h3>
+                {role.title} · {role.company}
+              </h3>
+              <p class="role-meta">
+                {role.period}
+                {role.location ? ` · ${role.location}` : ''}
+              </p>
+              {role.client && <p class="role-client">{role.client}</p>}
+            </header>
+            <ul>
+              {role.bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+            {role.stack && <p class="role-stack">{role.stack}</p>}
+          </article>
+        ))
+      }
+    </div>
+    <div class="other-roles">
+      <h3>{t.experience.otherHeading}</h3>
+      <ul>
+        {
+          t.experience.otherRoles.map((role) => (
+            <li>
+              <span>{role.title}</span>
+              <span>{role.period}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="role-stack">{t.experience.otherStack}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="work" aria-labelledby="work-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="work-heading">{t.highlights.heading}</h2>
+      <p>{t.highlights.subheading}</p>
+    </div>
+    <div class="highlight-grid">
+      {
+        t.highlights.items.map((item) => (
+          <article class="highlight-card">
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills" aria-labelledby="skills-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="skills-heading">{t.skills.heading}</h2>
+    </div>
+    <div class="skills-grid">
+      {
+        t.skills.groups.map((group) => (
+          <div class="skill-group">
+            <h3>{group.name}</h3>
+            <p>{group.items}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="languages-note">
+      <strong>{t.skills.languagesHeading}:</strong> {t.skills.languages}
+    </p>
+  </div>
+</section>
+
+<section class="section" id="education" aria-labelledby="education-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="education-heading">{t.education.heading}</h2>
+    </div>
+    <div class="education-card">
+      <h3>{t.education.degree}</h3>
+      <p>
+        {t.education.school} · {t.education.period}
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="contact-heading">{t.contact.heading}</h2>
+      <p>{t.contact.subheading}</p>
+    </div>
+    <div class="contact-grid">
+      <a class="contact-link" href="mailto:wes9319_rhcp@hotmail.com">
+        <span>{t.contact.email}</span>
+        wes9319_rhcp@hotmail.com
+      </a>
+      <a class="contact-link" href="tel:+593995988138">
+        <span>{t.contact.phone}</span>
+        (+593) 995 988 138
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/elvis-vasquez/" target="_blank" rel="noopener noreferrer">
+        <span>LinkedIn</span>
+        linkedin.com/in/elvis-vasquez
+      </a>
+      <a class="contact-link" href="https://github.com/wes9319" target="_blank" rel="noopener noreferrer">
+        <span>GitHub</span>
+        github.com/wes9319
+      </a>
+    </div>
+    <p style="margin-top: 1.5rem">
+      <a class="btn btn-primary" href="/cv.pdf" download>
+        {t.contact.downloadCv}
+      </a>
+    </p>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import type { Lang } from '../i18n/types';
+import type { Translations } from '../i18n/types';
+import { getAlternatePath } from '../i18n/utils';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  lang: Lang;
+  t: Translations;
+}
+
+const { lang, t } = Astro.props;
+const alternatePath = getAlternatePath(lang);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={t.meta.description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="alternate" hreflang="en" href="https://wes9319.github.io/" />
+    <link rel="alternate" hreflang="es" href="https://wes9319.github.io/es/" />
+    <link rel="canonical" href={lang === 'en' ? 'https://wes9319.github.io/' : 'https://wes9319.github.io/es/'} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{t.meta.title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t.nav.skip}</a>
+    <Header lang={lang} t={t} alternatePath={alternatePath} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer t={t} />
+  </body>
+</html>
