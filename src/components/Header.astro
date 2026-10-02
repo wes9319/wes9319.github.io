@@ -1,0 +1,45 @@
+---
+import type { Lang, Translations } from '../i18n/types';
+import { getHomePath } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  t: Translations;
+  alternatePath: string;
+}
+
+const { lang, t, alternatePath } = Astro.props;
+const home = getHomePath(lang);
+
+const links = [
+  { href: `${home}#about`, label: t.nav.about },
+  { href: `${home}#experience`, label: t.nav.experience },
+  { href: `${home}#work`, label: t.nav.work },
+  { href: `${home}#skills`, label: t.nav.skills },
+  { href: `${home}#education`, label: t.nav.education },
+  { href: `${home}#contact`, label: t.nav.contact },
+];
+---
+
+<header class="site-header">
+  <div class="container site-header-inner">
+    <a class="brand" href={home}>
+      <img src="/images/logo-ewvv.png" alt="EWVV" width="200" height="100" />
+      <span>Wesley</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list">
+        {links.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="lang-switch" href={alternatePath} hreflang={lang === 'en' ? 'es' : 'en'} lang={lang === 'en' ? 'es' : 'en'}>
+        {t.langSwitcher.switchTo}
+      </a>
+    </div>
+  </div>
+</header>
